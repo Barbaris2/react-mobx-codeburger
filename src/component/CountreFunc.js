@@ -1,22 +1,17 @@
-import React from 'react';
-import { observer, useLocalObservable } from 'mobx-react';
+import React, { useEffect } from 'react';
+import { observer } from 'mobx-react';
+import { runInAction } from 'mobx';
+
+import { counterStoreFunc } from '../stores';
 
 const ConterFunction = observer(props => {
-  // const {dec, inc, count} = ...
-  const store = useLocalObservable(() => {
-    return {
-      count: props.initialCount ?? 0,
-      get color() {
-        return this.count > 0 ? 'green' : this.count < 0 ? 'red' : 'black';
-      },
-      dec() {
-        this.count--;
-      },
-      inc() {
-        this.count++;
-      },
-    };
-  });
+  const store = counterStoreFunc();
+
+  useEffect(() => {
+    runInAction(() => {
+      store.count = props.initialCount ?? 0;
+    });
+  }, [props.initialCount]);
 
   return (
     <div>
