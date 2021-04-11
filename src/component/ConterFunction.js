@@ -1,8 +1,7 @@
 import React from 'react';
-import { observer, useLocalObservable } from 'mobx-react';
-
-const ConterFunction = observer(props => {
-  // const {dec, inc, count} = ...
+import { observer, useLocalObservable, Observer } from 'mobx-react';
+// observer - reaction, Observer - component
+const ConterFunction = props => {
   const store = useLocalObservable(() => {
     return {
       count: props.initialCount ?? 0,
@@ -16,12 +15,13 @@ const ConterFunction = observer(props => {
   });
 
   return (
+    // Используя Observer перерисовавается только <span>
     <div>
       <button onClick={store.dec}>-</button>
-      <span>{store.count}</span>
+      <Observer>{() => <span>{store.count}</span>}</Observer>
       <button onClick={store.inc}>+</button>
     </div>
   );
-});
+};
 
 export default ConterFunction;
