@@ -1,9 +1,9 @@
-import CounterClass from './component/CounterClass';
+import ConterFunction from './component/ConterFunction';
 
 function App() {
   return (
     <div className='App'>
-      <CounterClass initialCount={5} />
+      <ConterFunction initialCount={10} />
     </div>
   );
 }
