@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-import { runInAction } from 'mobx';
+import { runInAction, autorun } from 'mobx';
 
 import { CounterStoreClass } from '../stores';
 
@@ -8,11 +8,13 @@ import { CounterStoreClass } from '../stores';
 const CounterClass = observer(
   class extends Component {
     store = new CounterStoreClass();
+
     componentDidMount() {
       // store.count = this.props.initialCount ?? 0;
       runInAction(() => {
         this.store.count = this.props.initialCount ?? 0;
       });
+      autorun(() => console.log(`color: ${this.store.color}`));
     }
 
     render() {

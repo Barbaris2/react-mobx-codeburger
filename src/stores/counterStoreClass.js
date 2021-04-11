@@ -23,10 +23,15 @@ export class CounterStoreClass {
     //   () => this.count > 13,
     //   () => console.log(`${this.count} > 13`)
     // );
-    reaction(
+    const disposer = reaction(
       () => this.count,
       (count, prevCount) => {
         console.log(`prevCount: ${prevCount}, count: ${count}`);
+
+        // уничтожение реакции
+        if (count > 13) {
+          disposer();
+        }
       }
     );
   }
