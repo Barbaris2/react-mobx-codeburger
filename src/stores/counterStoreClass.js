@@ -3,7 +3,9 @@ import {
   makeObservable,
   action,
   computed,
-  makeAutoObservable,
+  autorun,
+  when,
+  reaction,
 } from 'mobx';
 
 export class CounterStoreClass {
@@ -16,7 +18,17 @@ export class CounterStoreClass {
       dec: action,
       inc: action.bound,
     });
-    // makeAutoObservable(this, { inc: action.bound });
+    // autorun(() => console.log(`count: ${this.count}`));
+    // when(
+    //   () => this.count > 13,
+    //   () => console.log(`${this.count} > 13`)
+    // );
+    reaction(
+      () => this.count,
+      (count, prevCount) => {
+        console.log(`prevCount: ${prevCount}, count: ${count}`);
+      }
+    );
   }
 
   get color() {
